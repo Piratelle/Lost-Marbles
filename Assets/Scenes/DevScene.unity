@@ -753,7 +753,7 @@ MonoBehaviour:
   rbvel: 0
   grounded: 0
   minSpeedForSound: 1
-  groundCheckDistance: 0.6
+  groundCheckDistance: 0.75
   groundLayer:
     serializedVersion: 2
     m_Bits: 2147483647
@@ -1487,7 +1487,7 @@ MonoBehaviour:
   target: {fileID: 576196032}
   smoothSpeed: 0.125
   offset: {x: 0, y: 1, z: 4}
-  rotationSpeed: 100
+  rotationSpeed: 200
   liftSpeed: 2
   obstacleMask:
     serializedVersion: 2

@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 281513558}
   m_Layer: 0
   m_Name: GroovyBridge
-  m_TagString: Untagged
+  m_TagString: Solid Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 508322605}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Solid Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 511200979}
   m_Layer: 0
   m_Name: Enviro
-  m_TagString: Untagged
+  m_TagString: Solid Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 511200977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67d6b85f15fe4a5468b6cf2788f0c3fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 8dbff31ec765e254bab6b185e76f1988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tiltSpeed: 5
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 513077870}
   m_Layer: 0
   m_Name: Ramp
-  m_TagString: Untagged
+  m_TagString: Solid Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -745,12 +745,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 576196027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a173ec9857bfb374ea7c70c27b01ffb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 34430c6b602abc849ac9beebb406fda5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pitchScale: 10
   moveSpeed: 20
   rbvel: 0
   grounded: 0
+  minSpeedForSound: 1
+  groundCheckDistance: 0.6
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2147483647
 --- !u!82 &576196035
 AudioSource:
   m_ObjectHideFlags: 0
@@ -761,7 +767,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4636f416137ce3a4bbaf553fd507cd08, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1d0db7ab76b3fc948a45c2ca3e5a45b1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1475,17 +1481,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab2e21ca91bbee4c91909e7a3d55844, type: 3}
+  m_Script: {fileID: 11500000, guid: 45c2089374b40e643bd1c063b5812677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 576196032}
   smoothSpeed: 0.125
   offset: {x: 0, y: 1, z: 4}
-  rotationSpeed: 200
+  rotationSpeed: 100
   liftSpeed: 2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 0
 --- !u!4 &1216544368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3229284921775658815, guid: 631030b9f2d012c47a6916a40e03e4c4, type: 3}
@@ -1772,7 +1778,7 @@ GameObject:
   - component: {fileID: 1967981019}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Solid Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1865,6 +1871,10 @@ PrefabInstance:
     - target: {fileID: 745760741589673106, guid: 631030b9f2d012c47a6916a40e03e4c4, type: 3}
       propertyPath: m_Name
       value: Groove (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 745760741589673106, guid: 631030b9f2d012c47a6916a40e03e4c4, type: 3}
+      propertyPath: m_TagString
+      value: Solid Object
       objectReference: {fileID: 0}
     - target: {fileID: 3229284921775658815, guid: 631030b9f2d012c47a6916a40e03e4c4, type: 3}
       propertyPath: m_RootOrder

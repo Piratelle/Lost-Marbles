@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RollingSphereController : MonoBehaviour
 {
+    public float pitchScale = 10.0f;
     public float moveSpeed = 5.0f;
     public float rbvel;
 
@@ -23,7 +24,6 @@ public class RollingSphereController : MonoBehaviour
         audioS = GetComponent<AudioSource>();
         audioS.loop = true;
         mainCamera = Camera.main;
-        grounded = IsGrounded();
     }
 
 
@@ -34,6 +34,7 @@ public class RollingSphereController : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
+        grounded = IsGrounded();
     }
 
     private void Movement()
@@ -96,7 +97,7 @@ public class RollingSphereController : MonoBehaviour
         }
 
         // Update pitch based on the speed of the sphere
-        audioS.pitch = Mathf.Clamp(rb.velocity.magnitude / 10.0f, 0.5f, 2.0f);
+        audioS.pitch = Mathf.Clamp(rb.velocity.magnitude / pitchScale, 0.1f, 2.0f);
     }
 
 }

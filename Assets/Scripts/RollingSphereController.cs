@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class RollingSphereController : MonoBehaviour
 {
-    public float pitchScale = 10.0f;
-    public float moveSpeed = 5.0f;
-    public float rbvel;
-
-    public bool grounded;
+    public float pitchScale = 20.0f;
+    public float volumeScale = 15.0f;
+    public float moveSpeed = 20.0f;
+    public bool grounded = true;
     private Rigidbody rb;
-
-    public float minSpeedForSound = 1.0f;
-    public float groundCheckDistance = 0.6f;
+    public float minSpeedForSound = 0.1f;
+    public float groundCheckDistance = 0.75f;
     public LayerMask groundLayer;
-    private AudioSource audioS;
+    private AudioSource[] audioS;
     private Camera mainCamera;
     
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        audioS = GetComponent<AudioSource>();
-        audioS.loop = true;
+        audioS = GetComponents<AudioSource>();
         mainCamera = Camera.main;
     }
 
 
     private void Update()
-    {
-        rbvel = rb.velocity.magnitude; 
+    {       
+        RollingSound();
     }
     private void FixedUpdate()
     {
@@ -79,7 +76,6 @@ public class RollingSphereController : MonoBehaviour
         {
         rb.AddForce(relativeMovement * moveSpeed * .2f);
         }
-        RollingSound();
     }
 
     private bool IsGrounded(){
@@ -87,17 +83,18 @@ public class RollingSphereController : MonoBehaviour
     }
     private void RollingSound()
     {
-        if (IsGrounded() && rb.velocity.magnitude >= minSpeedForSound && !audioS.isPlaying)
+        if (IsGrounded() && rb.velocity.magnitude >= minSpeedForSound && !audioS[0].isPlaying)
         {
-            audioS.Play();
+            audioS[0].Play();
         }
         else if (!IsGrounded() || rb.velocity.magnitude < minSpeedForSound)
         {
-            audioS.Pause();
+            audioS[0].Pause();
         }
-
         // Update pitch based on the speed of the sphere
-        audioS.pitch = Mathf.Clamp(rb.velocity.magnitude / pitchScale, 0.1f, 2.0f);
+        audioS[0].pitch = Mathf.Clamp(rb.velocity.magnitude / pitchScale, 0.1f, 2.0f);
+        audioS[0].volume = Mathf.Clamp(rb.velocity.magnitude / volumeScale, 0.0f, 2.0f);
+
     }
 
 }

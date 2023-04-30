@@ -11,6 +11,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public GameObject player;
+    public GameObject goal;
     public GameObject wallPrefab;
 
     MazeData maze;
@@ -32,6 +33,9 @@ public class Level : MonoBehaviour
             GameObject wallGO = Instantiate<GameObject>(wallPrefab, lvl.transform);
             maze.BuildWall(wallGO, wall);
         }
+
+        // place goal
+        goal.transform.position = maze.GoalPos();
 
         // move player onto the board
         player.transform.position = maze.SpawnPos();

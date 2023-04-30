@@ -75,6 +75,47 @@ public class MazeData
         walls.Add(new Wall(left, front, left, back)); // Left wall
         walls.Add(new Wall(right, front, right, back)); // Right wall
 
+        // now add interior walls
+        walls.Add(new Wall(left, back - 2, left + 1, back - 2));
+        walls.Add(new Wall(left + 1, front + 1, left + 1, back - 4));
+        walls.Add(new Wall(left + 1, back - 4, left + 3, back - 4));
+        walls.Add(new Wall(left + 2, back - 4, left + 2, back - 1));
+        walls.Add(new Wall(left + 2, front + 1, left + 2, back - 5));
+        walls.Add(new Wall(left + 2, back - 5, left + 3, back - 5));
+        walls.Add(new Wall(left + 2, front + 2, left + 3, front + 2));
+        walls.Add(new Wall(left + 3, back - 4, left + 3, back - 1));
+        walls.Add(new Wall(left + 3, front + 5, left + 3, back - 5));
+        walls.Add(new Wall(left + 3, front + 2, left + 3, front + 4));
+        walls.Add(new Wall(left + 3, back - 1, left + 4, back - 1));
+        walls.Add(new Wall(left + 4, back - 1, left + 4, back));
+        walls.Add(new Wall(left + 4, back - 4, left + 4, back - 2));
+        walls.Add(new Wall(left + 4, front + 1, left + 4, front + 5));
+        walls.Add(new Wall(left + 4, front + 1, left + 5, front + 1));
+        walls.Add(new Wall(left + 5, back - 2, left + 5, back - 1));
+        walls.Add(new Wall(left + 5, front + 5, left + 5, back - 5));
+        walls.Add(new Wall(left + 5, front + 1, left + 5, front + 3));
+        walls.Add(new Wall(left + 5, back - 1, right - 5, back - 1));
+        walls.Add(new Wall(left + 5, back - 2, right - 4, back - 2));
+        walls.Add(new Wall(left + 5, front + 5, right - 5, front + 5));
+        walls.Add(new Wall(left + 5, front + 2, right - 3, front + 2));
+        walls.Add(new Wall(right - 5, back - 3, right - 5, back - 2));
+        walls.Add(new Wall(right - 5, front + 3, right - 3, front + 3));
+        walls.Add(new Wall(right - 4, back - 2, right - 4, back));
+        walls.Add(new Wall(right - 4, front + 5, right - 4, back - 4));
+        walls.Add(new Wall(right - 4, front, right - 4, front + 1));
+        walls.Add(new Wall(right - 4, front + 1, right - 2, front + 1));
+        walls.Add(new Wall(right - 3, back - 3, right - 3, back));
+        walls.Add(new Wall(right - 3, front + 3, right - 3, front + 5));
+        walls.Add(new Wall(right - 3, back - 5, right - 1, back - 5));
+        walls.Add(new Wall(right - 2, back - 5, right - 2, back - 1));
+        walls.Add(new Wall(right - 2, front + 3, right - 2, front + 5));
+        walls.Add(new Wall(right - 2, back - 1, right - 1, back - 1));
+        walls.Add(new Wall(right - 2, front + 3, right, front + 3));
+        walls.Add(new Wall(right - 1, back - 2, right - 1, back - 1));
+        walls.Add(new Wall(right - 1, front + 5, right - 1, back - 5));
+        walls.Add(new Wall(right - 1, back - 2, right, back - 2));
+        walls.Add(new Wall(right - 1, front + 2, right, front + 2));
+
         // set spawn and goal positions (in maze coordinates)
         spawnPosition = new Vector2(left + 0.5f, front + 0.5f);
         goalPosition = new Vector2(right - 0.5f, back - 1.5f);

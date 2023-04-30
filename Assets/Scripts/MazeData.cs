@@ -10,13 +10,14 @@ using UnityEngine;
  */
 public class MazeData
 {
-    private static readonly float MAZE_SCALE = 2f; // # of unity grid squares corresponding to 1 maze square, in 1 dimension
+    private static readonly int MAZE_SCALE = 2; // # of unity squares that make up 1 side of 1 maze square
     private static readonly float BASE_HEIGHT = 0.05f;
-    private static readonly float WALL_THICKNESS = 0.1f;
-    private static readonly float WALL_HEIGHT = 1.0f;
+    private static readonly float WALL_THICKNESS = 0.05f;
+    private static readonly float WALL_HEIGHT = 1f;
 
     // Maze Dimensions
     // best if these are odd (central (0,0) tile), but not required
+    // also best if these * MAZE_SCALE produce even number, otherwise positional calculations may be wonky
     private int mazeWidth;
     private int mazeDepth;
 
@@ -26,22 +27,34 @@ public class MazeData
 
     public readonly List<Wall> walls = new List<Wall>();
 
+    /**
+     * Struct to contain Wall data (endpoints).
+     */
     public struct Wall
     {
-        public Vector2 centerPos;
-        public int width;
-        public int depth;
+        public Vector2 botLeft;
+        public Vector2 topRight;
 
-        public Wall(int xPos, int yPos, int w, int d)
+        /**
+         * Constructor which takes in two sets of maze coordinates
+         * 
+         * @param x1    The X coordinate for the bottom/left-most endpoint of this Wall.
+         * @param z1    The Z coordinate for the bottom/left-most endpoint of this Wall.
+         * @param x2    The X coordinate for the top/right-most endpoint of this Wall.
+         * @param z2    The Z coordinate for the top/right-most endpoint of this Wall.
+         */
+        public Wall(float x1, float z1, float x2, float z2)
         {
-            centerPos = new Vector2(xPos, yPos);
-            width = w;
-            depth = d;
+            botLeft = new Vector2(x1, z1);
+            topRight = new Vector2(x2, z2);
         }
     }
 
     /**
      * Constructor for maze, accepting all flexible values.
+     * 
+     * @param mazeWidth     The total # of maze squares in the X dimension.
+     * @param mazeDepth     The total # of maze squares in the Z dimension.
      */
     public MazeData(int mazeWidth, int mazeDepth)
     {
@@ -49,20 +62,26 @@ public class MazeData
         this.mazeWidth = mazeWidth;
         this.mazeDepth = mazeDepth;
 
+        // calculate edge positions
+        float left = -1 * mazeWidth / 2f;
+        float right = mazeWidth / 2f;
+        float back = mazeDepth / 2f;
+        float front = -1 * mazeDepth / 2f;
+        //Debug.Log("Edges detected: L {" + left + "} R {" + right + "} F {" + front + "} B {" + back + "}");
+
         // define walls
-        walls.Add(new Wall(0, MaxZ(), mazeWidth, 0)); // Front wall
-        walls.Add(new Wall(0, MinZ(), mazeWidth, 0)); // Back wall
-        walls.Add(new Wall(MaxX(), 0, 0, mazeDepth)); // Right wall
-        walls.Add(new Wall(MinX(), 0, 0, mazeDepth)); // Left wall
+        walls.Add(new Wall(left, front, right, front)); // Front wall
+        walls.Add(new Wall(left, back, right, back)); // Back wall
+        walls.Add(new Wall(left, front, left, back)); // Left wall
+        walls.Add(new Wall(right, front, right, back)); // Right wall
 
         // set spawn and goal positions (in maze coordinates)
-        spawnPosition = new Vector2(-5, -5);
-        goalPosition = new Vector2(5, 4);
+        spawnPosition = new Vector2(left + 0.5f, front + 0.5f);
+        goalPosition = new Vector2(right - 0.5f, back - 1.5f);
     }
 
     /**
      * Accessor for the maze's local X scale.
-     * 
      * @return      Maze's local X scale.
      */
     public float Width()
@@ -72,7 +91,6 @@ public class MazeData
 
     /**
      * Accessor for the maze's local Z scale.
-     * 
      * @return      Maze's local Z scale.
      */
     public float Depth()
@@ -82,7 +100,6 @@ public class MazeData
 
     /**
      * Accessor for the maze's local Y scale.
-     * 
      * @return      Maze's local Y scale.
      */
     public float Height()
@@ -92,82 +109,20 @@ public class MazeData
 
     /**
      * Accessor for spawn position as non-child local position.
-     * 
-     * @return      Maze's local spawn position for a non-child object (marble).
+     * @return      Maze's spawn position as a local transform position for a non-child object (marble).
      */
     public Vector3 SpawnPos()
     {
-        return GetLocalPos(spawnPosition, 1); // marble height is 1
+        return MazeToLocalPos(spawnPosition, 1f); // marble height is 1
     }
 
     /**
      * Accessor for goal position as non-child local position.
-     * 
-     * @return      Maze's local goal position for a non-child object (marble).
+     * @return      Maze's goal position as a local transform position for a non-child object (marble).
      */
     public Vector3 GoalPos()
     {
-        return GetLocalPos(goalPosition, 1); // marble height is 1
-    }
-
-    /**
-     * Apply Maze wall traits to GameObject wall.
-     * 
-     * @param gameObject        The GameObject to apply the maze wall traits to.
-     * @param wall              The Maze Wall whose traits will be applied to the GameObject.
-     */
-    public void BuildWall(GameObject gameObject, Wall wall)
-    {
-        Debug.Log("Building wall @ (" + wall.centerPos.x + "," + wall.centerPos.y + ")");
-        Debug.Log("Width: " + wall.width + "/ Depth: " + wall.depth);
-
-        // Set local scale
-        float width = (wall.width == 0 ? WALL_THICKNESS : wall.width);
-        float depth = (wall.depth == 0 ? WALL_THICKNESS : wall.depth);
-        gameObject.transform.localScale = GetScaleForChild(width, WALL_HEIGHT, depth);
-
-        // Set local position
-        gameObject.transform.localPosition = GetPosForChild(wall.centerPos, WALL_HEIGHT);
-    }
-
-    /**
-     * Accessor for right-most maze coordinate.
-     * 
-     * @return      Maze's right-most maze coordinate.
-     */
-    private int MaxX()
-    {
-        return (mazeWidth - 1) / 2;
-    }
-
-    /**
-     * Accessor for left-most maze coordinate.
-     * 
-     * @return      Maze's left-most maze coordinate.
-     */
-    private int MinX()
-    {
-        return (-1 * mazeWidth) / 2;
-    }
-
-    /**
-     * Accessor for nearest maze coordinate.
-     * 
-     * @return      Maze's nearest maze coordinate.
-     */
-    private int MaxZ()
-    {
-        return (mazeDepth - 1) / 2;
-    }
-
-    /**
-     * Accessor for farthest maze coordinate.
-     * 
-     * @return      Maze's farthest maze coordinate.
-     */
-    private int MinZ()
-    {
-        return (-1 * mazeDepth) / 2;
+        return MazeToLocalPos(goalPosition, 1f); // marble height is 1
     }
 
     /**
@@ -177,7 +132,7 @@ public class MazeData
      * @param objHeight     The height of the object being positioned.
      * @return              The local position for the object.
      */
-    private Vector3 GetLocalPos(Vector2 mazePos, float objHeight)
+    private Vector3 MazeToLocalPos(Vector2 mazePos, float objHeight)
     {
         return new Vector3(MAZE_SCALE * mazePos.x, objHeight / 2, MAZE_SCALE * mazePos.y);
     }
@@ -185,72 +140,51 @@ public class MazeData
     /**
      * Converts a maze position (X, Z) into a local unity transform position (X, Y, Z) based on the child object's height.
      * 
-     * @param mazePos       The position in maze coordinates.
-     * @param objHeight     The height of the object being positioned.
-     * @return              The local position for the object.
+     * @param mazePos           The position in maze coordinates.
+     * @param childHeight       The height of the object being positioned.
+     * @return                  The local position for the child object.
      */
-    private Vector3 GetPosForChild(Vector2 mazePos, float objHeight)
+    private Vector3 MazeToChildPos(Vector2 mazePos, float childHeight)
     {
-        return new Vector3(GetXForChild(mazePos.x), GetYForChild(objHeight / 2), GetZForChild(mazePos.y));
+        return new Vector3(mazePos.x / mazeWidth, childHeight / (2 * BASE_HEIGHT), mazePos.y / mazeDepth);
     }
 
     /**
-     * Converts a maze scale (width, height, depth) into a local unity transform scale (X, Y, Z) based on the child object's height.
-     */
-    private Vector3 GetScaleForChild(float widthInMaze, float heightInMaze, float depthInMaze)
-    {
-        return new Vector3(GetXForChild(widthInMaze), GetYForChild(heightInMaze), GetZForChild(depthInMaze));
-    }
-
-    /**
-     * Converts an X value in maze units to a local unity transform X dimension value.
+     * Converts a child object's maze dimensions (width, depth, height) into a local unity transform scale (X, Y, Z).
      * 
-     * @param xInMaze       The X value in maze units to convert.
-     * @return              A float containing the correct X value to supply to a local transform.
+     * @param width         The child object's X dimension in maze units.
+     * @param depth         The child object's Z dimension in maze units.
+     * @param height        The child object's Y dimension in maze units.
+     * @return              The local scale for the child object.
      */
-    private float GetXForChild(float xInMaze)
+    private Vector3 MazeToChildScale(float width, float depth, float height)
     {
-        return GetDimForChild(xInMaze, Width());
+        return new Vector3(width / mazeWidth, height / BASE_HEIGHT, depth / mazeDepth);
     }
 
     /**
-     * Converts a Z value in maze units to a local unity transform Z dimension value.
+     * Apply Maze wall traits to GameObject wall.
      * 
-     * @param zInMaze       The Z value in maze units to convert.
-     * @return              A float containing the correct Z value to supply to a local transform.
+     * @param gameObject        The GameObject to apply the maze wall traits to.
+     * @param wall              The maze Wall whose traits will be applied to the GameObject.
      */
-    private float GetZForChild(float zInMaze)
+    public void BuildWall(GameObject wallGO, Wall wall)
     {
-        return GetDimForChild(zInMaze, Depth());
-    }
+        // Learn wall's maze dimensions
+        float width = wall.topRight.x - wall.botLeft.x;
+        if (width == 0) width = WALL_THICKNESS;
+        float depth = wall.topRight.y - wall.botLeft.y;
+        if (depth == 0) depth = WALL_THICKNESS;
 
-    /**
-     * Converts a Y value in maze units to a local unity transform Y dimension value.
-     * 
-     * @param yInMaze       The Y value in maze units to convert.
-     * @return              A float containing the correct Y value to supply to a local transform.
-     */
-    private float GetYForChild(float yInMaze)
-    {
-        return GetDimForChild(yInMaze, Height());
-    }
+        // determine central point
+        float x = (wall.topRight.x + wall.botLeft.x) / 2;
+        float z = (wall.topRight.y + wall.botLeft.y) / 2;
 
-    /**
-     * Converts a value in maze units to a local unity transform value for a child object of this Level.
-     * 
-     * @param diminMaze     The value in maze units to convert.
-     * @param mazeDim       The maze value of the relevant maze scale dimension.
-     * @return              A float containing the correct value to supply to a local transform.
-     */
-    private float GetDimForChild(float dimInMaze, float mazeDim)
-    {
-        if (mazeDim == 0)
-        {
-            return 0f;
-        }
-        else
-        {
-            return MAZE_SCALE * dimInMaze / mazeDim;
-        }
+        // Set local scale
+        wallGO.transform.localScale = MazeToChildScale(width, depth, WALL_HEIGHT);
+
+        // Set local position
+        wallGO.transform.localPosition = MazeToChildPos(new Vector2(x, z), WALL_HEIGHT);
+        
     }
 }

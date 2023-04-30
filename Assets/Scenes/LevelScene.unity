@@ -525,8 +525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchScale: 10
+  volumeScale: 15
   moveSpeed: 5
-  rbvel: 0
   grounded: 0
   minSpeedForSound: 1
   groundCheckDistance: 0.6

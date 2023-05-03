@@ -35,7 +35,9 @@ public class Level : MonoBehaviour
         }
 
         // place goal
-        goal.transform.position = maze.GoalPos();
+        Vector3 goalFinal = new Vector3(maze.GoalPos().x, -.075f, maze.GoalPos().z);
+        goal.transform.position = goalFinal;
+        
 
         // move player onto the board
         player.transform.position = maze.SpawnPos();

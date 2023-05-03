@@ -5,8 +5,8 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
-    public float rotationSpeed = 100f;
-    public float liftSpeed = 2f;
+    public float rotationSpeed = 200f;
+    public float liftSpeed = 5f;
     public LayerMask obstacleMask;
 
     private void FixedUpdate()

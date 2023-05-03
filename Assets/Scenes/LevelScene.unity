@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &74273250 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3266428652343082329, guid: 425af8d7a22bc7348a635dbf11e237e0, type: 3}
+  m_PrefabInstance: {fileID: 1439404807}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &74273257 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3266428652343082274, guid: 425af8d7a22bc7348a635dbf11e237e0, type: 3}
+  m_PrefabInstance: {fileID: 1439404807}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &782406972
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +216,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &782406976
 MonoBehaviour:
@@ -220,14 +230,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c2089374b40e643bd1c063b5812677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1439404815}
+  target: {fileID: 74273257}
   smoothSpeed: 0.125
-  offset: {x: 1, y: 2, z: 1}
-  rotationSpeed: 100
-  liftSpeed: 2
+  offset: {x: 1, y: 1, z: -2}
+  rotationSpeed: 200
+  liftSpeed: 10
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!1 &1256885157
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,9 +251,9 @@ GameObject:
   - component: {fileID: 1256885159}
   - component: {fileID: 1256885158}
   - component: {fileID: 1256885162}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelMap
-  m_TagString: Untagged
+  m_TagString: Solid Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -255,7 +265,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256885157}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e054737bd3925ff46a495b86cc7bce71, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -338,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf3f19a3a0b9ca44a49ca4862798076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1439404808}
+  player: {fileID: 74273250}
   goal: {fileID: 1896581927}
   wallPrefab: {fileID: 4637391278658041530, guid: 0734c2853d067464b8e34fc2a6c6982e, type: 3}
 --- !u!1 &1368482907
@@ -433,7 +443,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1439404807
 PrefabInstance:
@@ -492,16 +502,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 425af8d7a22bc7348a635dbf11e237e0, type: 3}
---- !u!1 &1439404808 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2386395484249088643, guid: 425af8d7a22bc7348a635dbf11e237e0, type: 3}
-  m_PrefabInstance: {fileID: 1439404807}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1439404815 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2386395484249088760, guid: 425af8d7a22bc7348a635dbf11e237e0, type: 3}
-  m_PrefabInstance: {fileID: 1439404807}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1896581927 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3445437896931642607, guid: 5b67c87ee722f48489c808c6f610d1ed, type: 3}

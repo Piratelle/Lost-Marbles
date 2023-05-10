@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /**
  * A class handling main menu behavior.
@@ -10,15 +11,36 @@ using UnityEngine;
  */
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    /**
+     * Switches into the game play scene.
+     */
+    public void PlayGame()
     {
-        
+        SceneManager.LoadScene("LevelScene");
     }
 
-    // Update is called once per frame
-    void Update()
+    /**
+     * Opens the options menu.
+     */
+    public void Options()
     {
-        
+        // TBD
+    }
+
+    /**
+     * Switches into the credits scene.
+     */
+    public void Credits()
+    {
+        // TBD
+    }
+
+    /**
+     * Terminates the program.
+     */
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quitting!");
     }
 }

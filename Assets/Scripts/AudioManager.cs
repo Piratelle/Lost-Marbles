@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
+
 
 public class AudioManager : MonoBehaviour
 {
+
+    public UnityEvent<AudioClip> playSFX;
     public static AudioManager Instance;
 
     public Sound[] musicSounds, sfxSounds, sfxLoopSounds;
@@ -20,10 +24,6 @@ private void Awake()
     {
         Destroy(gameObject);
     }
-}
-
-private void Start()
-{
 }
 
 

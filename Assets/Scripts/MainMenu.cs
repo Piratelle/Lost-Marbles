@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
      */
     public void Options()
     {
-        // TBD
+        SceneManager.LoadScene("OptionsScene", LoadSceneMode.Additive);
     }
 
     /**

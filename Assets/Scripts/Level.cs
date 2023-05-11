@@ -43,5 +43,15 @@ public class Level : MonoBehaviour
         player.transform.position = maze.SpawnPos();
     }
 
-    
+    /**
+     * Frame update. 
+     * Handles applicable user input.
+     */
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            PauseMenu.TryOpen();
+        }
+    }
 }

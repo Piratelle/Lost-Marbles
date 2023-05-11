@@ -14,7 +14,7 @@ using TMPro;
  */
 public class OptionsMenu : MonoBehaviour
 {
-    public Toggle fullscreenTog, continueTog;
+    public Toggle fullscreenTog, continueTog, tiltTog;
 
     public AudioMixer mixer;
 
@@ -89,8 +89,19 @@ public class OptionsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("SFXVolume", sfxSlide.value);
     }
 
+    /**
+     * Sets player preference for continuous play (vs. seeing game over screen between victories).
+     */
     public void SetContinuousPlay()
     {
         PlayerPrefs.SetInt("Continue", continueTog.isOn ? 1 : 0);
+    }
+
+    /**
+     * Sets player preference for randomized tilt (vs. key-controlled).
+     */
+    public void SetTiltRandom()
+    {
+        PlayerPrefs.SetInt("TiltRand", tiltTog.isOn ? 1 : 0);
     }
 }

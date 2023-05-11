@@ -18,15 +18,8 @@ public class Level : MonoBehaviour
     public GameObject goal;
     public GameObject wallPrefab;
 
-    public float changeTiltChance = 0.05f;
-    public float changeTiltDirChance = 0.1f;
-    public float tiltSpeed = 5f;
-
     GameObject lvl;
     MazeData maze;
-    bool randomTilt = false;
-    bool tiltPos = true;
-    float maxTilt = 45f;
 
     /**
      * Reset level counter and difficulty.
@@ -43,9 +36,6 @@ public class Level : MonoBehaviour
     {
         // increment level
         LEVEL += 1;
-
-        // check relevant player prefs
-        if (PlayerPrefs.HasKey("TiltRand")) randomTilt = (PlayerPrefs.GetInt("TiltRand") > 0);
 
         // build/customize level floor
         lvl = this.gameObject;
@@ -79,28 +69,6 @@ public class Level : MonoBehaviour
         {
             PauseMenu.TryOpen();
         }
-
-        // handle tilting
-        bool tilt = false;
-        if (!randomTilt)
-        {
-            if (Input.GetKey(KeyCode.Q))
-            {
-                tiltPos = false;
-                tilt = true;
-            }
-            if (Input.GetKey(KeyCode.E))
-            {
-                tiltPos = true;
-                tilt = true;
-            }
-        } else
-        {
-            if (Random.value < changeTiltDirChance) tiltPos = !tiltPos;
-            tilt = (Random.value < changeTiltChance);
-        }
-        if ((tiltPos && lvl.transform.rotation.eulerAngles.x >= maxTilt) || (!tiltPos && lvl.transform.rotation.eulerAngles.x <= 360 - maxTilt && lvl.transform.rotation.eulerAngles.x > 180)) tilt = false;
-        if (tilt) lvl.transform.Rotate((tiltPos ? 1 : -1) * tiltSpeed * Time.deltaTime, 0f, 0f);
     }
 
     /**

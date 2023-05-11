@@ -142,6 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 188591233}
+  - component: {fileID: 188591234}
   m_Layer: 0
   m_Name: Environment
   m_TagString: Untagged
@@ -167,6 +168,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &188591234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188591232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbff31ec765e254bab6b185e76f1988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTiltChance: 0.05
+  changeTiltDirChance: 0.1
+  tiltSpeed: 5
 --- !u!1001 &216236346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -549,9 +565,6 @@ MonoBehaviour:
   player: {fileID: 74273250}
   goal: {fileID: 1896581927}
   wallPrefab: {fileID: 4637391278658041530, guid: 0734c2853d067464b8e34fc2a6c6982e, type: 3}
-  changeTiltChance: 0.05
-  changeTiltDirChance: 0.1
-  tiltSpeed: 5
 --- !u!1 &1368482907
 GameObject:
   m_ObjectHideFlags: 0

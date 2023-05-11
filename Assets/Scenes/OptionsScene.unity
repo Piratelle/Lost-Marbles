@@ -1243,13 +1243,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 866031475}
   m_HandleRect: {fileID: 447894302}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1478572763}
+        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &831820851
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,13 +2170,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1225704737}
   m_HandleRect: {fileID: 1387969491}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1478572763}
+        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1073592226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,13 +2662,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 527233104}
   m_HandleRect: {fileID: 1341535486}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1478572763}
+        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1341535485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,6 +2954,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullscreenTog: {fileID: 1631688775}
+  mixer: {fileID: 24100000, guid: f4fa381396746dd4aae8468bae2e7eeb, type: 2}
+  masterSlide: {fileID: 799865605}
+  musicSlide: {fileID: 1338639138}
+  sfxSlide: {fileID: 1027451151}
+  masterLbl: {fileID: 938932244}
+  musicLbl: {fileID: 533959629}
+  sfxLbl: {fileID: 263599800}
 --- !u!1001 &1579390042
 PrefabInstance:
   m_ObjectHideFlags: 0

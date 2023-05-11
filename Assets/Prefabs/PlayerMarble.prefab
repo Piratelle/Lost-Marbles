@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 3266428652343082275}
   - component: {fileID: 3266428652343082334}
   - component: {fileID: 3266428652343082273}
-  m_Layer: 6
+  - component: {fileID: 1251718638}
+  m_Layer: 7
   m_Name: PlayerMarble
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -233,3 +234,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1251718638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3266428652343082329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 267f8b2ea85bc02408940fca22c4697b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: {fileID: 0}
+  marbleValue: 1000
+  timeValue: 50

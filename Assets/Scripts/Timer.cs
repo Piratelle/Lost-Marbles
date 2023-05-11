@@ -6,22 +6,23 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public float timeLeft;
-    public bool activeTime = false;
-
+    private bool activeTime = false;
     public TMP_Text TimerText;
 
     void Start()
     {
-        activeTime = true;
+        ResumeTimer();
     }
 
     void Update()
     {
+        // count down as long as there is time left
         if (timeLeft > 0f && activeTime == true)
         {
             timeLeft -= Time.deltaTime;
             UpdateTimer(timeLeft);
         }
+        // when out of time
         else
         {
             activeTime = false;
@@ -29,6 +30,7 @@ public class Timer : MonoBehaviour
 
     }
 
+    //modifies the text and formatting of the timer
     void UpdateTimer(float currentTime)
     {
         currentTime += 1f;
@@ -38,8 +40,14 @@ public class Timer : MonoBehaviour
         TimerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
+    //stop the timer, for pause menus, level ends and the like
     public void StopTimer()
     {
         activeTime = false;
+    }
+
+    public void ResumeTimer()
+    {
+        activeTime = true;
     }
 }

@@ -14,7 +14,7 @@ using TMPro;
  */
 public class OptionsMenu : MonoBehaviour
 {
-    public Toggle fullscreenTog;
+    public Toggle fullscreenTog, continueTog;
 
     public AudioMixer mixer;
 
@@ -54,7 +54,7 @@ public class OptionsMenu : MonoBehaviour
     /**
      * Sets application fullscreen based on value of Fullscreen Toggle.
      */
-    public void ApplyFullscreen()
+    public void SetFullscreen()
     {
         Screen.fullScreen = fullscreenTog.isOn;
     }
@@ -87,5 +87,10 @@ public class OptionsMenu : MonoBehaviour
         sfxLbl.text = Mathf.RoundToInt(sfxSlide.value + 80).ToString();
         mixer.SetFloat("SFXVolume", sfxSlide.value);
         PlayerPrefs.SetFloat("SFXVolume", sfxSlide.value);
+    }
+
+    public void SetContinuousPlay()
+    {
+        PlayerPrefs.SetInt("Continue", continueTog.isOn ? 1 : 0);
     }
 }

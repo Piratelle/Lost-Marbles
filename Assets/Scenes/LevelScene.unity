@@ -140,6 +140,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6263488401655781338, guid: 2b3987b077056a14c8faf3003dbc03ed, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6769960269759101060, guid: f4fa381396746dd4aae8468bae2e7eeb, type: 2}
     - target: {fileID: 6263488402334090188, guid: 2b3987b077056a14c8faf3003dbc03ed, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -188,6 +192,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6263488402463823233, guid: 2b3987b077056a14c8faf3003dbc03ed, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -2852482575181903369, guid: f4fa381396746dd4aae8468bae2e7eeb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b3987b077056a14c8faf3003dbc03ed, type: 3}
 --- !u!1 &782406972
@@ -685,11 +693,15 @@ PrefabInstance:
     - target: {fileID: 393782552, guid: 5b67c87ee722f48489c808c6f610d1ed, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: -2852482575181903369, guid: f4fa381396746dd4aae8468bae2e7eeb, type: 2}
+      objectReference: {fileID: -8569193689036875639, guid: f4fa381396746dd4aae8468bae2e7eeb, type: 2}
     - target: {fileID: 393782553, guid: 5b67c87ee722f48489c808c6f610d1ed, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 74273257}
+    - target: {fileID: 1688061351, guid: 5b67c87ee722f48489c808c6f610d1ed, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -8569193689036875639, guid: f4fa381396746dd4aae8468bae2e7eeb, type: 2}
     - target: {fileID: 3445437896931642600, guid: 5b67c87ee722f48489c808c6f610d1ed, type: 3}
       propertyPath: m_RootOrder
       value: 3

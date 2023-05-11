@@ -20,7 +20,6 @@ public class PauseMenu : MonoBehaviour
     {
         if (!OPEN)
         {
-            Time.timeScale = 0;
             SceneManager.LoadScene("PauseScene", LoadSceneMode.Additive);
         }
     }
@@ -31,6 +30,17 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         OPEN = true;
+        Time.timeScale = 0;
+
+        AudioSource[] audios = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource a in audios)
+        {
+            if (!a.outputAudioMixerGroup || (a.outputAudioMixerGroup.name != "UI" && a.outputAudioMixerGroup.name != "Music"))
+            {
+                Debug.Log("Muting: " + a.name);
+                a.Pause();
+            }
+        }
     }
 
     /**
@@ -40,6 +50,17 @@ public class PauseMenu : MonoBehaviour
     {
         OPEN = false;
         Time.timeScale = 1;
+
+        AudioSource[] audios = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource a in audios)
+        {
+            if (!a.outputAudioMixerGroup || (a.outputAudioMixerGroup.name != "UI" && a.outputAudioMixerGroup.name != "Music"))
+            {
+                Debug.Log("UnMuting: " + a.name);
+                a.UnPause();
+            }
+        }
+
         SceneManager.UnloadSceneAsync("PauseScene");
     }
 

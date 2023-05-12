@@ -19,6 +19,7 @@ public class Level : MonoBehaviour
     public GameObject player;
     public GameObject goal;
     public GameObject wallPrefab;
+    public GameObject weeMarblePrefab;
 
     GameObject lvl;
     MazeData maze;
@@ -40,7 +41,7 @@ public class Level : MonoBehaviour
         // increment level
         CURR_LVL = this;
         LEVEL += 1;
-        Timer.Initialize(30f * LEVEL);
+        Timer.Initialize(45f * LEVEL);
 
         // build/customize level floor
         lvl = this.gameObject;

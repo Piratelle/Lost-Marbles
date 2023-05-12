@@ -691,7 +691,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4756579451410687033, guid: e14041241e9ca374e838f0bc7676c9a9, type: 3}
       propertyPath: m_Name
-      value: Credits Button
+      value: Controls Button
       objectReference: {fileID: 0}
     - target: {fileID: 4756579451410687034, guid: e14041241e9ca374e838f0bc7676c9a9, type: 3}
       propertyPath: m_Pivot.x
@@ -783,7 +783,7 @@ PrefabInstance:
       objectReference: {fileID: 1135386741}
     - target: {fileID: 4756579451410687035, guid: e14041241e9ca374e838f0bc7676c9a9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Credits
+      value: Controls
       objectReference: {fileID: 0}
     - target: {fileID: 4756579451410687035, guid: e14041241e9ca374e838f0bc7676c9a9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -795,7 +795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4756579451608166611, guid: e14041241e9ca374e838f0bc7676c9a9, type: 3}
       propertyPath: m_text
-      value: Credits
+      value: Controls
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e14041241e9ca374e838f0bc7676c9a9, type: 3}

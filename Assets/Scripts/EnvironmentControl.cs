@@ -30,12 +30,12 @@ public class EnvironmentControl : MonoBehaviour
         bool tilt = false;
         if (!randomTilt)
         {
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKey(KeyCode.E))
             {
                 tiltPos = false;
                 tilt = true;
             }
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.Q))
             {
                 tiltPos = true;
                 tilt = true;
@@ -48,6 +48,6 @@ public class EnvironmentControl : MonoBehaviour
         }
         if ((tiltPos && enviro.transform.rotation.eulerAngles.x >= maxTilt && enviro.transform.rotation.eulerAngles.x < 180) 
             || (!tiltPos && enviro.transform.rotation.eulerAngles.x <= 360 - maxTilt && enviro.transform.rotation.eulerAngles.x > 180)) tilt = false;
-        if (tilt) enviro.transform.Rotate((tiltPos ? 1 : -1) * tiltSpeed * Time.deltaTime, 0f, 0f);
+        if (tilt) enviro.transform.Rotate(0f, 0f, (tiltPos ? 1 : -1) * tiltSpeed * Time.deltaTime);
     }
 }

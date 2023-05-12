@@ -42,11 +42,11 @@ public class MainMenu : MonoBehaviour
     }
 
     /**
-     * Switches into the credits scene.
+     * Opens the controls menu.
      */
-    public void Credits()
+    public void Controls()
     {
-        // TBD
+        SceneManager.LoadScene("ControlsScene", LoadSceneMode.Additive);
     }
 
     /**

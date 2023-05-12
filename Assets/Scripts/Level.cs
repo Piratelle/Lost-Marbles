@@ -12,7 +12,9 @@ using UnityEngine.SceneManagement;
 public class Level : MonoBehaviour
 {
     public static int LEVEL = 0;
-    public static float TIME_LEFT = 0f;
+    private static float exitDelay = 5f;
+    private static string nextScene;
+    private static Level CURR_LVL;
 
     public GameObject player;
     public GameObject goal;
@@ -27,6 +29,7 @@ public class Level : MonoBehaviour
     public static void Reset()
     {
         LEVEL = 0;
+        Score.Reset();
     }
 
     /**
@@ -35,11 +38,13 @@ public class Level : MonoBehaviour
     private void Start()
     {
         // increment level
+        CURR_LVL = this;
         LEVEL += 1;
+        Timer.Initialize(30f * LEVEL);
 
         // build/customize level floor
         lvl = this.gameObject;
-        maze = new MazeData(10 + LEVEL, 10 + LEVEL); // use default values for now, dynamic at some point?
+        maze = new MazeData(10 + LEVEL, 10 + LEVEL);
         lvl.transform.localScale = new Vector3(maze.Width(), maze.Height(), maze.Depth());
 
         // populate level walls
@@ -74,19 +79,32 @@ public class Level : MonoBehaviour
     /**
      * Handles end-of-game behavior.
      */
-    public void GameOver()
+    public static void GameOver()
     {
-        if (TIME_LEFT > 0)
+        nextScene = "GameOverScene";
+        if (Timer.TIME_LEFT > 0)
         {
             // Continuous Play settings
             bool continuePlay = false;
             if (PlayerPrefs.HasKey("Continue")) continuePlay = (PlayerPrefs.GetInt("Continue") > 0);
 
             if (continuePlay) {
-                SceneManager.LoadScene("LevelScene");
-                return;
+                //SceneManager.LoadScene("LevelScene");
+                nextScene = "LevelScene";
+                //return;
             }
         }
-        SceneManager.LoadScene("GameOverScene");
+        //SceneManager.LoadScene("GameOverScene");
+        CURR_LVL.Invoke("ExitScene", exitDelay);
+    }
+
+    /**
+     * Loads next scene.
+     */
+    void ExitScene()
+    {
+        Score playerScore = player.GetComponentInChildren<Score>();
+        playerScore.calculate();
+        SceneManager.LoadScene(nextScene);
     }
 }

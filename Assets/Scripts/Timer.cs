@@ -5,37 +5,47 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public float timeLeft;
+    public static float TIME_LEFT;
     private bool activeTime = false;
     public TMP_Text TimerText;
+    public AudioSource lossSound;
 
     void Start()
     {
         ResumeTimer();
     }
 
+    public static void Initialize(float timeLeft)
+    {
+        TIME_LEFT = timeLeft;
+    }
+
     void Update()
     {
         // count down as long as there is time left
-        if (timeLeft > 0f && activeTime == true)
+        if (activeTime)
         {
-            timeLeft -= Time.deltaTime;
-            UpdateTimer(timeLeft);
+            if (TIME_LEFT > 0f)
+            {
+                TIME_LEFT -= Time.deltaTime;
+                UpdateTimer(TIME_LEFT);
+            }
+            // when out of time
+            else
+            {
+                lossSound.Play();
+                StopTimer();
+                Level.GameOver();
+            }
         }
-        // when out of time
-        else
-        {
-            activeTime = false;
-        }
-
     }
 
     //modifies the text and formatting of the timer
     void UpdateTimer(float currentTime)
     {
         currentTime += 1f;
-        float minutes = Mathf.FloorToInt(currentTime/60f);
-        float seconds = Mathf.FloorToInt(currentTime%60f);
+        int minutes = (int) currentTime / 60;
+        int seconds = (int) currentTime % 60;
 
         TimerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }

@@ -21,10 +21,11 @@ public class GoalHit : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && Timer.TIME_LEFT > 0)
         {
             touchGoal.Invoke();
             followMarble = true;
+            Level.GameOver();
         }
     }
     void GoalSounds(string s)

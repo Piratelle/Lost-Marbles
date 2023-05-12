@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /**
@@ -24,6 +25,12 @@ public class MazeData
     // Maze Positions
     private Vector2 spawnPosition;
     private Vector2 goalPosition;
+
+    // Maze Edges
+    float left;
+    float right;
+    float back;
+    float front;
 
     public readonly List<Wall> walls = new List<Wall>();
 
@@ -63,18 +70,31 @@ public class MazeData
         this.mazeDepth = mazeDepth;
 
         // calculate edge positions
-        float left = -1 * mazeWidth / 2f;
-        float right = mazeWidth / 2f;
-        float back = mazeDepth / 2f;
-        float front = -1 * mazeDepth / 2f;
+        left = -1 * mazeWidth / 2f;
+        right = mazeWidth / 2f;
+        back = mazeDepth / 2f;
+        front = -1 * mazeDepth / 2f;
         //Debug.Log("Edges detected: L {" + left + "} R {" + right + "} F {" + front + "} B {" + back + "}");
 
-        // define walls
+        // define exterior walls
         walls.Add(new Wall(left, front, right, front)); // Front wall
         walls.Add(new Wall(left, back, right, back)); // Back wall
         walls.Add(new Wall(left, front, left, back)); // Left wall
         walls.Add(new Wall(right, front, right, back)); // Right wall
 
+        GenerateDefaultWalls();
+        //GenerateWilsonWalls();
+
+        // set spawn and goal positions (in maze coordinates)
+        spawnPosition = new Vector2(left + 0.5f, front + 0.5f);
+        goalPosition = new Vector2(right - 0.5f, back - 1.5f);
+    }
+
+    /**
+     * Generates pre-defined maze walls.
+     */
+    void GenerateDefaultWalls()
+    {
         // now add interior walls
         walls.Add(new Wall(left, back - 2, left + 1, back - 2));
         walls.Add(new Wall(left + 1, front + 1, left + 1, back - 4));
@@ -115,10 +135,167 @@ public class MazeData
         walls.Add(new Wall(right - 1, front + 5, right - 1, back - 5));
         walls.Add(new Wall(right - 1, back - 2, right, back - 2));
         walls.Add(new Wall(right - 1, front + 2, right, front + 2));
+    }
 
-        // set spawn and goal positions (in maze coordinates)
-        spawnPosition = new Vector2(left + 0.5f, front + 0.5f);
-        goalPosition = new Vector2(right - 0.5f, back - 1.5f);
+    /**
+     * Generate maze walls using Wilson's algorithm.
+     */
+    void GenerateWilsonWalls()
+    {
+        // generate list of all vertices
+        List<Vector2Int> toBeAdded = new List<Vector2Int>();
+        List<Vector2Int> added = new List<Vector2Int>();
+        for (int x = 0; x < mazeWidth; x++)
+        {
+            for (int z = 0; z < mazeDepth; z++)
+            {
+                toBeAdded.Add(new Vector2Int(x, z));
+            }
+        }
+
+        // generate list of all edges
+        List<Tuple<Vector2Int, Vector2Int>> edges = new List<Tuple<Vector2Int, Vector2Int>>();
+        foreach (Vector2Int startSquare in toBeAdded)
+        {
+            // test neighbors
+            Vector2Int nextSquare = new Vector2Int(startSquare.x - 1, startSquare.y);
+            if (IsValidMazeSquare(nextSquare))
+            {
+                if (!edges.Contains(new Tuple<Vector2Int, Vector2Int>(nextSquare, startSquare)))
+                edges.Add(new Tuple<Vector2Int, Vector2Int>(startSquare, nextSquare));
+            }
+
+            nextSquare = new Vector2Int(startSquare.x, startSquare.y + 1);
+            if (IsValidMazeSquare(nextSquare))
+            {
+                if (!edges.Contains(new Tuple<Vector2Int, Vector2Int>(nextSquare, startSquare)))
+                edges.Add(new Tuple<Vector2Int, Vector2Int>(startSquare, nextSquare));
+            }
+
+            nextSquare = new Vector2Int(startSquare.x + 1, startSquare.y);
+            if (IsValidMazeSquare(nextSquare))
+            {
+                if (!edges.Contains(new Tuple<Vector2Int, Vector2Int>(nextSquare, startSquare)))
+                edges.Add(new Tuple<Vector2Int, Vector2Int>(startSquare, nextSquare));
+            }
+
+            nextSquare = new Vector2Int(startSquare.x, startSquare.y - 1);
+            if (IsValidMazeSquare(nextSquare))
+            {
+                if (!edges.Contains(new Tuple<Vector2Int, Vector2Int>(nextSquare, startSquare)))
+                edges.Add(new Tuple<Vector2Int, Vector2Int>(startSquare, nextSquare));
+            }
+        }
+
+        // add random square to maze
+        int i = UnityEngine.Random.Range(0, toBeAdded.Count);
+        added.Add(toBeAdded[i]);
+        toBeAdded.RemoveAt(i);
+
+        // run Wilson's algorithm
+        while (toBeAdded.Count > 0)
+        {
+            // pick a random square
+            int j = UnityEngine.Random.Range(0, toBeAdded.Count);
+            Vector2Int newStart = toBeAdded[j];
+
+            // begin walk
+            Dictionary<Vector2Int, int> walk = new Dictionary<Vector2Int, int>();
+            Vector2Int prevSquare = newStart;
+            Vector2Int nextSquare = newStart;
+            while (!added.Contains(nextSquare))
+            {
+                int dir = -1;
+                bool isValid = false;
+                prevSquare = nextSquare;
+                while (!isValid)
+                {
+                    // get random direction
+                    dir = UnityEngine.Random.Range(0, 4);
+                    switch(dir)
+                    {
+                        case 0: // left
+                            nextSquare += new Vector2Int(-1, 0);
+                            break;
+                        case 1: // up
+                            nextSquare += new Vector2Int(0, 1);
+                            break;
+                        case 2: // right
+                            nextSquare += new Vector2Int(1, 0);
+                            break;
+                        case 3: // down
+                            nextSquare += new Vector2Int(0, -1);
+                            break;
+                        default:
+                            break;
+                    }
+                    isValid = IsValidMazeSquare(nextSquare);
+                }
+
+                // record walk
+                if (walk.ContainsKey(prevSquare)) walk.Remove(prevSquare); // need to update direction
+                walk.Add(prevSquare, dir);
+            }
+
+            // add walk to maze
+            nextSquare = newStart;
+            while(!added.Contains(nextSquare))
+            {
+                prevSquare = nextSquare;
+                added.Add(prevSquare);
+                int dir = walk[prevSquare];
+                walk.Remove(prevSquare);
+                switch (dir)
+                {
+                    case 0: // left
+                        nextSquare += new Vector2Int(-1, 0);
+                        break;
+                    case 1: // up
+                        nextSquare += new Vector2Int(0, 1);
+                        break;
+                    case 2: // right
+                        nextSquare += new Vector2Int(1, 0);
+                        break;
+                    case 3: // down
+                        nextSquare += new Vector2Int(0, -1);
+                        break;
+                    default:
+                        break;
+                }
+
+                // remove the edge so no wall is generated
+                Tuple<Vector2Int, Vector2Int> testEdge = new Tuple<Vector2Int, Vector2Int>(prevSquare, nextSquare);
+                if (edges.Contains(testEdge)) edges.Remove(testEdge);
+                testEdge = new Tuple<Vector2Int, Vector2Int>(nextSquare, prevSquare);
+                if (edges.Contains(testEdge)) edges.Remove(testEdge);
+            }
+        }
+
+        // now build walls
+        foreach (Tuple<Vector2Int, Vector2Int> edge in edges)
+        {
+            Vector2Int sq1 = edge.Item1;
+            Vector2Int sq2 = edge.Item2;
+
+            if (sq1.x == sq2.x)
+            {
+                float y = (sq1.y + sq2.y) / 2f;
+                walls.Add(new Wall(sq1.x - 0.5f, y, sq1.x + 0.5f, y));
+            } else
+            {
+                float x = (sq1.x + sq2.x) / 2f;
+                walls.Add(new Wall(x, sq1.y - 0.5f, x, sq1.y + 0.5f));
+            }
+        }
+    }
+
+    /**
+     * Checks if given maze square is within the bounds of the maze.
+     * @return      True if maze square is within the bounds of the maze, False otherwise.
+     */
+    private bool IsValidMazeSquare(Vector2Int mazeSquare)
+    {
+        return (mazeSquare.x >= left && mazeSquare.x <= right && mazeSquare.y >= front && mazeSquare.y <= back);
     }
 
     /**

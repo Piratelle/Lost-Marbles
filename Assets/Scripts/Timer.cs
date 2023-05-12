@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
 
     public static void Initialize(float timeLeft)
     {
-        TIME_LEFT = timeLeft;
+        TIME_LEFT = timeLeft + 1f;
     }
 
     void Update()
@@ -43,7 +43,7 @@ public class Timer : MonoBehaviour
     //modifies the text and formatting of the timer
     void UpdateTimer(float currentTime)
     {
-        currentTime += 1f;
+        //currentTime += 1f;
         int minutes = (int) currentTime / 60;
         int seconds = (int) currentTime % 60;
 
